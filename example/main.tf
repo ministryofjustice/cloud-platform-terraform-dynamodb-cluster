@@ -11,4 +11,7 @@ module "example_team_dynamodb" {
   is-production          = "false"
   environment-name       = "development"
   infrastructure-support = "example-team@digtal.justice.gov.uk"
+
+  hash_key  = "exemple-hash"
+  range_key = "example-range"
 }

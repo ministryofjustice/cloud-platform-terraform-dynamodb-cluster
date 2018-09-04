@@ -26,10 +26,6 @@ resource "aws_dynamodb_table" "default" {
     enabled = "${var.enable_encryption}"
   }
 
-  point_in_time_recovery {
-    enabled = "${var.enable_point_in_time_recovery}"
-  }
-
   lifecycle {
     ignore_changes = ["read_capacity", "write_capacity"]
   }
@@ -53,8 +49,8 @@ module "dynamodb_autoscaler" {
   source                       = "git::https://github.com/cloudposse/terraform-aws-dynamodb-autoscaler.git?ref=tags/0.2.4"
   enabled                      = "${var.enable_autoscaler}"
   name                         = "${var.application}-${var.environment-name}"
-  namespace = "${var.application}"
-  stage = "${var.environment-name}"
+  namespace                    = "${var.application}"
+  stage                        = "${var.environment-name}"
   dynamodb_table_name          = "${aws_dynamodb_table.default.id}"
   dynamodb_table_arn           = "${aws_dynamodb_table.default.arn}"
   autoscale_write_target       = "${var.autoscale_write_target}"
