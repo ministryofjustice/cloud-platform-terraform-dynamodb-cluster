@@ -78,9 +78,10 @@ data "aws_iam_policy_document" "policy" {
     ]
 
     resources = [
-      "${aws_dynamodb_table.default.arn}/*",
+      "${aws_dynamodb_table.default.arn}",
     ]
-  },
+  }
+
   statement {
     actions = [
       "dynamodb:ListTables",

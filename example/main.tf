@@ -3,7 +3,8 @@ provider "aws" {
 }
 
 module "example_team_dynamodb" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=create-db"
+  # source = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=create-db"
+  source = "../"
 
   team_name              = "example-team"
   business-unit          = "example-bu"
@@ -12,6 +13,6 @@ module "example_team_dynamodb" {
   environment-name       = "development"
   infrastructure-support = "example-team@digtal.justice.gov.uk"
 
-  hash_key  = "exemple-hash"
+  hash_key  = "example-hash"
   range_key = "example-range"
 }
