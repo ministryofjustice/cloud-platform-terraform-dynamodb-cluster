@@ -5,7 +5,7 @@ resource "random_id" "id" {
   byte_length = 16
 }
 
-resource "aws_dynamodb_table" "table" {
+resource "aws_dynamodb_table" "default" {
   name           = "${var.application}-${var.environment-name}"
   read_capacity  = "${var.autoscale_min_read_capacity}"
   write_capacity = "${var.autoscale_min_write_capacity}"
@@ -53,6 +53,8 @@ module "dynamodb_autoscaler" {
   source                       = "git::https://github.com/cloudposse/terraform-aws-dynamodb-autoscaler.git?ref=tags/0.2.4"
   enabled                      = "${var.enable_autoscaler}"
   name                         = "${var.application}-${var.environment-name}"
+  namespace = "${var.application}"
+  stage = "${var.environment-name}"
   dynamodb_table_name          = "${aws_dynamodb_table.default.id}"
   dynamodb_table_arn           = "${aws_dynamodb_table.default.arn}"
   autoscale_write_target       = "${var.autoscale_write_target}"
@@ -85,7 +87,7 @@ data "aws_iam_policy_document" "policy" {
     ]
 
     resources = [
-      "${aws_dynamodb_table.table.arn}/*",
+      "${aws_dynamodb_table.default.arn}/*",
     ]
   }
 }

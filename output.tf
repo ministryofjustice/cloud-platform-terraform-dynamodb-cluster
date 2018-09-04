@@ -1,24 +1,24 @@
 output "table_name" {
-  value       = "${aws_dynamodb_table.table.name}"
+  value       = "${aws_dynamodb_table.default.name}"
   description = "DynamoDB table name"
 }
 
 output "table_id" {
-  value       = "${aws_dynamodb_table.table.id}"
+  value       = "${aws_dynamodb_table.default.id}"
   description = "DynamoDB table ID"
 }
 
 output "table_arn" {
-  value       = "${aws_dynamodb_table.table.arn}"
+  value       = "${aws_dynamodb_table.default.arn}"
   description = "DynamoDB table ARN"
 }
 
 output "access_key_id" {
   description = "Access key id for db"
-  value       = "${aws_iam_access_key.user.id}"
+  value       = "${aws_iam_access_key.key.id}"
 }
 
 output "secret_access_key" {
   description = "Secret key for db"
-  value       = "${aws_iam_access_key.user.secret}"
+  value       = "${aws_iam_access_key.key.secret}"
 }
