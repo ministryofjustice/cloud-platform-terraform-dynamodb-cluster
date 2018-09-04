@@ -70,9 +70,3 @@ variable "enable_autoscaler" {
   default     = "true"
   description = "Flag to enable/disable DynamoDB autoscaling"
 }
-
-variable "enable_point_in_time_recovery" {
-  type        = "string"
-  default     = "true"
-  description = "Enable DynamoDB point in time recovery"
-}

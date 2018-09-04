@@ -30,11 +30,6 @@ resource "aws_dynamodb_table" "default" {
     ignore_changes = ["read_capacity", "write_capacity"]
   }
 
-  ttl {
-    attribute_name = "TimeToExist"
-    enabled        = false
-  }
-
   tags {
     business-unit          = "${var.business-unit}"
     application            = "${var.application}"
