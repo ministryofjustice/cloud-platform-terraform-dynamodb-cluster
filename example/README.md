@@ -23,7 +23,9 @@ until you get an exception like
 ```
 An error occurred (ProvisionedThroughputExceededException) when calling the PutItem operation (reached max retries: 9): The level of configured provisioned throughput for the table was exceeded. Consider increasing your provisioning level with the UpdateTable API.
 ```
-at this point the web interface will show "Provisioned write capacity units" increased.
+at this point the table has scaled:
+```AWS_PROFILE=ddb aws dynamodb describe-table --table-name exampleapp-development | jq -r '.Table | .TableName, (.ProvisionedThroughput | "write:", .WriteCapacityUnits, "read:", .ReadCapacityUnits)' | paste -sd\   -
+exampleapp-development write: 3 read: 1
+```
 
 Run `terraform destroy` when you want to destroy these resources created.
-

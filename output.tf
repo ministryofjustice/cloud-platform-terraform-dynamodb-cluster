@@ -3,11 +3,6 @@ output "table_name" {
   description = "DynamoDB table name"
 }
 
-output "table_id" {
-  value       = "${aws_dynamodb_table.default.id}"
-  description = "DynamoDB table ID"
-}
-
 output "table_arn" {
   value       = "${aws_dynamodb_table.default.arn}"
   description = "DynamoDB table ARN"

@@ -6,7 +6,7 @@ resource "random_id" "id" {
 }
 
 resource "aws_dynamodb_table" "default" {
-  name           = "${var.application}-${var.environment-name}"
+  name           = "${var.application}-${var.environment-name}-${random_id.id.hex}"
   read_capacity  = "${var.autoscale_min_read_capacity}"
   write_capacity = "${var.autoscale_min_write_capacity}"
   hash_key       = "${var.hash_key}"
@@ -28,6 +28,12 @@ resource "aws_dynamodb_table" "default" {
 
   lifecycle {
     ignore_changes = ["read_capacity", "write_capacity"]
+  }
+
+  ttl {
+    attribute_name = "${var.ttl_attribute}"
+    enabled = "true"
+    type = "N"
   }
 
   tags {

@@ -35,6 +35,12 @@ variable "enable_encryption" {
   description = "Enable DynamoDB server-side encryption"
 }
 
+variable "ttl_attribute" {
+  type        = "string"
+  default     = "Expires"
+  description = "DynamoDB table TTL attribute"
+}
+
 variable "autoscale_write_target" {
   default     = 50
   description = "The target value (in %) for DynamoDB write autoscaling"
