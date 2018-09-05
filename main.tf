@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 resource "random_id" "id" {
-  byte_length = 16
+  byte_length = 8
 }
 
 resource "aws_dynamodb_table" "default" {
@@ -33,9 +33,10 @@ resource "aws_dynamodb_table" "default" {
   ttl {
     attribute_name = "${var.ttl_attribute}"
     enabled        = "true"
-    type           = "N"
   }
-
+  point_in_time_recovery {
+    enabled = "true"
+  }
   tags {
     business-unit          = "${var.business-unit}"
     application            = "${var.application}"
