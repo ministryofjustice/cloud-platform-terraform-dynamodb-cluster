@@ -3,11 +3,6 @@ output "table_name" {
   description = "DynamoDB table name"
 }
 
-output "table_id" {
-  value       = "${module.example_team_dynamodb.table_id}"
-  description = "DynamoDB table ID"
-}
-
 output "table_arn" {
   value       = "${module.example_team_dynamodb.table_arn}"
   description = "DynamoDB table ARN"

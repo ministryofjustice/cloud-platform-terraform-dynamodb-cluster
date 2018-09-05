@@ -8,7 +8,7 @@ resource "random_id" "id" {
 resource "aws_dynamodb_table" "default" {
   name           = "${var.application}-${var.environment-name}-${random_id.id.hex}"
   read_capacity  = "${var.autoscale_min_read_capacity}"
-  write_capacity = "${var.autoscale_min_write_capacity}"
+  write_capacity = "${var.autoscale_min_read_capacity}"
   hash_key       = "${var.hash_key}"
   range_key      = "${var.range_key}"
 
@@ -32,8 +32,8 @@ resource "aws_dynamodb_table" "default" {
 
   ttl {
     attribute_name = "${var.ttl_attribute}"
-    enabled = "true"
-    type = "N"
+    enabled        = "true"
+    type           = "N"
   }
 
   tags {
@@ -85,16 +85,6 @@ data "aws_iam_policy_document" "policy" {
 
     resources = [
       "${aws_dynamodb_table.default.arn}",
-    ]
-  }
-
-  statement {
-    actions = [
-      "dynamodb:ListTables",
-    ]
-
-    resources = [
-      "*",
     ]
   }
 }
