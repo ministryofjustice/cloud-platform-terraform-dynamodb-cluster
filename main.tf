@@ -34,9 +34,11 @@ resource "aws_dynamodb_table" "default" {
     attribute_name = "${var.ttl_attribute}"
     enabled        = "true"
   }
+
   point_in_time_recovery {
     enabled = "true"
   }
+
   tags {
     business-unit          = "${var.business-unit}"
     application            = "${var.application}"
