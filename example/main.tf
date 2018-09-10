@@ -4,8 +4,8 @@ provider "aws" {
 }
 
 module "example_team_dynamodb" {
-  # source = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=create-db"
-  source = "../"
+  source = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=v1.0"
+  # source = "../"
 
   team_name              = "example-team"
   business-unit          = "example-bu"
