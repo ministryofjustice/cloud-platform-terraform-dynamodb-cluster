@@ -51,10 +51,9 @@ resource "aws_dynamodb_table" "default" {
 
 module "dynamodb_autoscaler" {
   source                       = "git::https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-autoscaler.git?ref=tags/0.2.4-cp"
+
   enabled                      = "${var.enable_autoscaler}"
   name                         = "cp-dynamo-${random_id.id.hex}"
-  namespace                    = "${var.application}"
-  stage                        = "${var.environment-name}"
   dynamodb_table_name          = "${aws_dynamodb_table.default.id}"
   dynamodb_table_arn           = "${aws_dynamodb_table.default.arn}"
   autoscale_write_target       = "${var.autoscale_write_target}"
