@@ -8,7 +8,7 @@ resource "random_id" "id" {
 resource "aws_dynamodb_table" "default" {
   name           = "cp-${random_id.id.hex}"
   read_capacity  = "${var.autoscale_min_read_capacity}"
-  write_capacity = "${var.autoscale_min_read_capacity}"
+  write_capacity = "${var.autoscale_min_write_capacity}"
   hash_key       = "${var.hash_key}"
   range_key      = "${var.range_key}"
 
@@ -50,7 +50,7 @@ resource "aws_dynamodb_table" "default" {
 }
 
 module "dynamodb_autoscaler" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-dynamodb-autoscaler.git?ref=tags/0.2.4"
+  source                       = "git::https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-autoscaler.git?ref=tags/0.2.4-cp"
   enabled                      = "${var.enable_autoscaler}"
   name                         = "cp-dynamo-${random_id.id.hex}"
   namespace                    = "${var.application}"
