@@ -17,7 +17,7 @@ $ terraform apply
 
 Test autoscaling with a loop like
 ```
-$ while true ; do AWS_PROFILE=ddb aws dynamodb put-item --table-name exampleapp-development --item '{"example-hash": {"S": "one"}, "example-range": {"S": "'$RANDOM'"}}' ; done
+$ while true ; do aws dynamodb put-item --table-name exampleapp-development --item '{"example-hash": {"S": "one"}, "example-range": {"S": "'$RANDOM'"}}' ; done
 ```
 until you get an exception like
 ```
@@ -25,14 +25,14 @@ An error occurred (ProvisionedThroughputExceededException) when calling the PutI
 ```
 at this point the db has scaled:
 ```
-$ AWS_PROFILE=ddb aws dynamodb describe-table --table-name exampleapp-development | jq -r '.Table | .TableName, (.ProvisionedThroughput | "write:", .WriteCapacityUnits, "read:", .ReadCapacityUnits)' | paste -sd\   -
+$ aws dynamodb describe-table --table-name exampleapp-development | jq -r '.Table | .TableName, (.ProvisionedThroughput | "write:", .WriteCapacityUnits, "read:", .ReadCapacityUnits)' | paste -sd\   -
 exampleapp-development write: 3 read: 1
 ```
 
 Test record expiration with
 ```
-$ AWS_PROFILE=ddb aws dynamodb describe-time-to-live --table-name exampleapp-development
-$ AWS_PROFILE=ddb aws dynamodb put-item --table-name exampleapp-development --item '{"example-hash": {"S": "this-will-vanish"}, "example-range": {"S": "'$RANDOM'"}, "Expires": {"N": "'`date -v+5m +%s`'"}}'
+$ aws dynamodb describe-time-to-live --table-name exampleapp-development
+$ aws dynamodb put-item --table-name exampleapp-development --item '{"example-hash": {"S": "this-will-vanish"}, "example-range": {"S": "'$RANDOM'"}, "Expires": {"N": "'`date -v+5m +%s`'"}}'
 ```
 Default TTL field name is 'Expires'. Do note that "DynamoDB typically deletes expired items within 48 hours of expiration": https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/howitworks-ttl.html
 

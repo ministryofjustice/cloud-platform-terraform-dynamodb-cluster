@@ -31,6 +31,13 @@ Sample usage is shown in the aptly named [example](example) folder.
 | environment | dev,prod | string | - | yes |
 | hash_key |  unique identifier | string | - | yes |
 | range_key | aka sort attribute | string | - | yes |
+| autoscale_write_target | 50% throttled reqs | n | 50 | no |
+| autoscale_read_target | 50% throttled reqs | n | 50 | no |
+| autoscale_min_read_capacity | AWS-specific "units" | n | 1 | no |
+| autoscale_min_write_capacity | AWS-specific "units" | n | 1 | no |
+| autoscale_max_read_capacity | AWS-specific "units" | n | 10 | no |
+| autoscale_max_write_capacity | AWS-specific "units" | n | 10 | no |
+| enable_autoscaler | on/off | bool | true | no |
 
 ## Outputs
 
