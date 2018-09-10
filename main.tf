@@ -6,7 +6,7 @@ resource "random_id" "id" {
 }
 
 resource "aws_dynamodb_table" "default" {
-  name           = "cp-dynamo-${random_id.id.hex}"
+  name           = "cp-${random_id.id.hex}"
   read_capacity  = "${var.autoscale_min_read_capacity}"
   write_capacity = "${var.autoscale_min_read_capacity}"
   hash_key       = "${var.hash_key}"
