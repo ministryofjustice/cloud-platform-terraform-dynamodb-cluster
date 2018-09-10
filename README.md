@@ -12,7 +12,7 @@ This module will create a "simple" (as opposed to a "global") table, with some s
 
 ```hcl
 module "example_team_dynamodb" {
-  source    = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=v1.0"
+  source    = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=1.0"
   team_name = "example-team"
 
   hash_key  = "example-hash"
