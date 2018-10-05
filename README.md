@@ -12,9 +12,9 @@ This module will create a "simple" (as opposed to a "global") table, with some s
 
 ```hcl
 module "example_team_dynamodb" {
-  source    = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=1.0"
-  team_name = "example-team"
+  source = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster"
 
+  team_name = "example-team"
   hash_key  = "example-hash"
   range_key = "example-range"
 }
@@ -43,9 +43,7 @@ Sample usage is shown in the aptly named [example](example) folder.
 
 ### Tags
 
-Some of the inputs are tags. All infrastructure resources need to be tagged according to MOJ techincal guidence. The tags are stored as variables that you will need to fill out as part of your module.
-
-https://ministryofjustice.github.io/technical-guidance/standards/documenting-infrastructure-owners/#documenting-owners-of-infrastructure
+Some of the inputs are tags. All infrastructure resources need to be tagged according to the [MOJ techincal guidence](https://ministryofjustice.github.io/technical-guidance/standards/documenting-infrastructure-owners/#documenting-owners-of-infrastructure). The tags are stored as variables that you will need to fill out as part of your module.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
