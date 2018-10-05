@@ -4,7 +4,7 @@ Configuration in this directory creates an example AWS DynamoDB table.
 
 This example is designed to be used in the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments/) repository.
 
-The output will be in a kubernetes `Secret`, which includes the the values of `table_name`, `table_arn`, `access_key_id` and `secret_access_key`.
+The output will be in a kubernetes `Secret`, which includes the values of `table_name`, `table_arn`, `access_key_id` and `secret_access_key`.
 
 ## Usage
 
