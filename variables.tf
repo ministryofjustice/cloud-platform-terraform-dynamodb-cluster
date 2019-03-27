@@ -79,5 +79,5 @@ variable "enable_autoscaler" {
 
 variable "aws_region" {
   description = "Region into which the resource will be created"
-  default = "eu-west-2"
+  default     = "eu-west-2"
 }
