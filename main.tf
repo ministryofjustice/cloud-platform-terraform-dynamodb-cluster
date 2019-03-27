@@ -1,3 +1,8 @@
+
+provider "aws" {
+  alias = "london"
+  region = "${var.aws_region}"
+}
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
@@ -6,6 +11,7 @@ resource "random_id" "id" {
 }
 
 resource "aws_dynamodb_table" "default" {
+  provider = "aws.london"
   name           = "cp-${random_id.id.hex}"
   read_capacity  = "${var.autoscale_min_read_capacity}"
   write_capacity = "${var.autoscale_min_write_capacity}"
@@ -50,7 +56,7 @@ resource "aws_dynamodb_table" "default" {
 }
 
 module "dynamodb_autoscaler" {
-  source                       = "git::https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-autoscaler.git?ref=tags/0.2.4-cp"
+  source                       = "git::https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-autoscaler.git?ref=tags/0.2.5-cp"
 
   enabled                      = "${var.enable_autoscaler}"
   name                         = "cp-dynamo-${random_id.id.hex}"
@@ -62,6 +68,7 @@ module "dynamodb_autoscaler" {
   autoscale_max_read_capacity  = "${var.autoscale_max_read_capacity}"
   autoscale_min_write_capacity = "${var.autoscale_min_write_capacity}"
   autoscale_max_write_capacity = "${var.autoscale_max_write_capacity}"
+  aws_region = "${var.aws_region}"
 }
 
 resource "aws_iam_user" "user" {
