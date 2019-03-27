@@ -13,7 +13,7 @@ provider "aws" {
  *
  */
 module "example_team_dynamodb" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=1.0"
+  source = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=2.0"
 
   team_name              = "example-team"
   business-unit          = "example-bu"
@@ -21,6 +21,7 @@ module "example_team_dynamodb" {
   is-production          = "false"
   environment-name       = "development"
   infrastructure-support = "example-team@digtal.justice.gov.uk"
+  aws_region             = "eu-west-2"
 
   hash_key  = "example-hash"
   range_key = "example-range"

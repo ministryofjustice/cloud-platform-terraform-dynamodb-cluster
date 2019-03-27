@@ -76,3 +76,8 @@ variable "enable_autoscaler" {
   default     = "true"
   description = "Flag to enable/disable DynamoDB autoscaling"
 }
+
+variable "aws_region" {
+  description = "Region into which the resource will be created"
+  default     = "eu-west-2"
+}

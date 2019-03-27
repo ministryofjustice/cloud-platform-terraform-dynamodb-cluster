@@ -39,6 +39,8 @@ Sample usage is shown in the aptly named [example](example) folder.
 | autoscale_max_read_capacity | AWS-specific "units" | n | 10 | no |
 | autoscale_max_write_capacity | AWS-specific "units" | n | 10 | no |
 | enable_autoscaler | on/off | bool | true | no |
+| aws_region | region | string | eu-west-2 | no |
+
 
 
 ### Tags
