@@ -1,5 +1,7 @@
 # cloud-platform-terraform-dynamodb-cluster
 
+[![Releases](https://img.shields.io/github/release/ministryofjustice/cloud-platform-terraform-dynamodb-cluster/all.svg?style=flat-square)](https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster/releases)
+
 DynamoDB instance and credentials for the Cloud Platform.
 This module will create a "simple" (as opposed to a "global") table, with some safe defaults:
  - a dedicated IAM user and API key allowing only access to this resource
