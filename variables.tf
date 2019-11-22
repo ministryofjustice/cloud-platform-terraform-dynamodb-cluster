@@ -1,8 +1,11 @@
-variable "team_name" {}
+variable "team_name" {
+}
 
-variable "application" {}
+variable "application" {
+}
 
-variable "environment-name" {}
+variable "environment-name" {
+}
 
 variable "is-production" {
   default = "false"
@@ -17,26 +20,28 @@ variable "infrastructure-support" {
   description = "The team responsible for managing the infrastructure. Should be of the form <team-name> (<team-email>)"
 }
 
-variable "hash_key" {}
+variable "hash_key" {
+}
 
 variable "hash_key_type" {
   default = "S"
 }
 
-variable "range_key" {}
+variable "range_key" {
+}
 
 variable "range_key_type" {
   default = "S"
 }
 
 variable "enable_encryption" {
-  type        = "string"
+  type        = string
   default     = "true"
   description = "Enable DynamoDB server-side encryption"
 }
 
 variable "ttl_attribute" {
-  type        = "string"
+  type        = string
   default     = "Expires"
   description = "DynamoDB table TTL attribute"
 }
@@ -72,7 +77,7 @@ variable "autoscale_max_write_capacity" {
 }
 
 variable "enable_autoscaler" {
-  type        = "string"
+  type        = string
   default     = "true"
   description = "Flag to enable/disable DynamoDB autoscaling"
 }
@@ -81,3 +86,4 @@ variable "aws_region" {
   description = "Region into which the resource will be created"
   default     = "eu-west-2"
 }
+
