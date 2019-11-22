@@ -62,7 +62,7 @@ resource "aws_dynamodb_table" "default" {
 }
 
 module "dynamodb_autoscaler" {
-  source = "git::https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-autoscaler.git?ref=tags/0.2.5-cp"
+  source = "git::https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-autoscaler.git?ref=tags/0.2.6-cp"
 
   enabled                      = var.enable_autoscaler
   name                         = "cp-dynamo-${random_id.id.hex}"
