@@ -1,7 +1,10 @@
-# terraform {
-#   backend "s3" {}
-# }
+terraform {
+  backend "s3" {
+
+  }
+}
 
 provider "aws" {
   region = "eu-west-2"
 }
+
