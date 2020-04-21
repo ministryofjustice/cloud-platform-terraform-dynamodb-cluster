@@ -34,6 +34,15 @@ variable "range_key_type" {
   default = "S"
 }
 
+variable "attributes" {
+  type = list(object({
+    name = string
+    type = string
+  }))
+  default     = []
+  description = "Additional DynamoDB attributes in the form of a list of mapped values"
+}
+
 variable "enable_encryption" {
   type        = string
   default     = "true"
