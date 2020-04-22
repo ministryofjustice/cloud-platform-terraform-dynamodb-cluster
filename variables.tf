@@ -28,6 +28,7 @@ variable "hash_key_type" {
 }
 
 variable "range_key" {
+  default = ""
 }
 
 variable "range_key_type" {
