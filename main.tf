@@ -9,6 +9,28 @@ data "aws_caller_identity" "current" {
 data "aws_region" "current" {
 }
 
+# attributes map here borrowed from https://github.com/cloudposse/terraform-aws-dynamodb
+locals {
+  attributes = concat(
+    [
+      {
+        name = var.range_key
+        type = var.range_key_type
+      },
+      {
+        name = var.hash_key
+        type = var.hash_key_type
+      }
+    ],
+    var.attributes
+  )
+
+  # Remove the first map from the list if no `range_key` is provided
+  from_index = length(var.range_key) > 0 ? 0 : 1
+
+  attributes_final = slice(local.attributes, local.from_index, length(local.attributes))
+}
+
 resource "random_id" "id" {
   byte_length = 8
 }
@@ -21,14 +43,12 @@ resource "aws_dynamodb_table" "default" {
   hash_key       = var.hash_key
   range_key      = var.range_key
 
-  attribute {
-    name = var.hash_key
-    type = var.hash_key_type
-  }
-
-  attribute {
-    name = var.range_key
-    type = var.range_key_type
+  dynamic "attribute" {
+    for_each = local.attributes_final
+    content {
+      name = attribute.value.name
+      type = attribute.value.type
+    }
   }
 
   server_side_encryption {
