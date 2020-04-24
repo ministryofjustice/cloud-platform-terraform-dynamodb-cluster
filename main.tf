@@ -99,7 +99,7 @@ module "dynamodb_autoscaler" {
 
 resource "aws_iam_user" "user" {
   name = "cp-dynamo-${random_id.id.hex}"
-  path = "/system/dynamo-user/${var.team_name}/"
+  path = "/system/dynamo-user/"
 }
 
 resource "aws_iam_access_key" "key" {
