@@ -14,6 +14,7 @@ module "example_team_dynamodb" {
   environment-name       = "development"
   infrastructure-support = "example-team@digtal.justice.gov.uk"
   aws_region             = "eu-west-2"
+  namespace              = var.namespace
 
   hash_key  = "example-hash"
   range_key = "example-range"
