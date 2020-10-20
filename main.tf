@@ -78,6 +78,7 @@ resource "aws_dynamodb_table" "default" {
     environment-name       = var.environment-name
     owner                  = var.team_name
     infrastructure-support = var.infrastructure-support
+    namespace              = var.namespace
   }
 }
 
