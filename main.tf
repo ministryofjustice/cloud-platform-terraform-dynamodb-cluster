@@ -96,7 +96,6 @@ module "dynamodb_autoscaler" {
   autoscale_max_read_capacity  = var.autoscale_max_read_capacity
   autoscale_min_write_capacity = var.autoscale_min_write_capacity
   autoscale_max_write_capacity = var.autoscale_max_write_capacity
-  aws_region                   = var.aws_region
 }
 
 resource "aws_iam_user" "user" {
