@@ -83,8 +83,9 @@ resource "aws_dynamodb_table" "default" {
 }
 
 module "dynamodb_autoscaler" {
-  source = "git::https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-autoscaler.git?ref=tags/0.2.6-cp"
+  source = "cloudposse/dynamodb-autoscaler/aws"
 
+  version                      = "0.13.0"
   enabled                      = var.enable_autoscaler
   name                         = "cp-dynamo-${random_id.id.hex}"
   dynamodb_table_name          = aws_dynamodb_table.default.id
