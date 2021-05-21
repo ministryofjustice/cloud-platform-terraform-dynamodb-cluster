@@ -82,6 +82,37 @@ resource "aws_dynamodb_table" "default" {
   }
 }
 
+resource "aws_iam_user" "user" {
+  name = "cp-dynamo-${random_id.id.hex}"
+  path = "/system/dynamo-user/"
+}
+
+resource "aws_iam_access_key" "key" {
+  user = aws_iam_user.user.name
+}
+
+resource "aws_iam_user_policy" "userpol" {
+  name   = aws_iam_user.user.name
+  policy = data.aws_iam_policy_document.policy.json
+  user   = aws_iam_user.user.name
+}
+
+data "aws_iam_policy_document" "policy" {
+  statement {
+    actions = [
+      "dynamodb:*",
+    ]
+
+    resources = [
+      aws_dynamodb_table.default.arn,
+    ]
+  }
+}
+
+#######################
+# dynamodb-autoscaler #
+#######################
+
 data "aws_iam_policy_document" "assume_role" {
   statement {
     sid = ""
@@ -152,6 +183,8 @@ resource "aws_iam_role_policy" "autoscaler_cloudwatch" {
   policy = data.aws_iam_policy_document.autoscaler_cloudwatch.json
 }
 
+# https://github.com/cloudposse/terraform-aws-dynamodb-autoscaler
+
 module "dynamodb_autoscaler" {
   source = "cloudposse/dynamodb-autoscaler/aws"
 
@@ -167,31 +200,3 @@ module "dynamodb_autoscaler" {
   autoscale_min_write_capacity = var.autoscale_min_write_capacity
   autoscale_max_write_capacity = var.autoscale_max_write_capacity
 }
-
-resource "aws_iam_user" "user" {
-  name = "cp-dynamo-${random_id.id.hex}"
-  path = "/system/dynamo-user/"
-}
-
-resource "aws_iam_access_key" "key" {
-  user = aws_iam_user.user.name
-}
-
-resource "aws_iam_user_policy" "userpol" {
-  name   = aws_iam_user.user.name
-  policy = data.aws_iam_policy_document.policy.json
-  user   = aws_iam_user.user.name
-}
-
-data "aws_iam_policy_document" "policy" {
-  statement {
-    actions = [
-      "dynamodb:*",
-    ]
-
-    resources = [
-      aws_dynamodb_table.default.arn,
-    ]
-  }
-}
-
