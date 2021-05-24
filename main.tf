@@ -82,22 +82,6 @@ resource "aws_dynamodb_table" "default" {
   }
 }
 
-module "dynamodb_autoscaler" {
-  source = "git::https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-autoscaler.git?ref=tags/0.2.6-cp"
-
-  enabled                      = var.enable_autoscaler
-  name                         = "cp-dynamo-${random_id.id.hex}"
-  dynamodb_table_name          = aws_dynamodb_table.default.id
-  dynamodb_table_arn           = aws_dynamodb_table.default.arn
-  autoscale_write_target       = var.autoscale_write_target
-  autoscale_read_target        = var.autoscale_read_target
-  autoscale_min_read_capacity  = var.autoscale_min_read_capacity
-  autoscale_max_read_capacity  = var.autoscale_max_read_capacity
-  autoscale_min_write_capacity = var.autoscale_min_write_capacity
-  autoscale_max_write_capacity = var.autoscale_max_write_capacity
-  aws_region                   = var.aws_region
-}
-
 resource "aws_iam_user" "user" {
   name = "cp-dynamo-${random_id.id.hex}"
   path = "/system/dynamo-user/"
@@ -125,3 +109,94 @@ data "aws_iam_policy_document" "policy" {
   }
 }
 
+#######################
+# dynamodb-autoscaler #
+#######################
+
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    sid = ""
+
+    actions = [
+      "sts:AssumeRole",
+    ]
+
+    principals {
+      type        = "Service"
+      identifiers = ["application-autoscaling.amazonaws.com"]
+    }
+
+    effect = "Allow"
+  }
+}
+
+resource "aws_iam_role" "autoscaler" {
+  count              = var.enable_autoscaler == "true" ? 1 : 0
+  name               = "cp-dynamo-${random_id.id.hex}-autoscaler"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+}
+
+data "aws_iam_policy_document" "autoscaler" {
+  statement {
+    sid = ""
+
+    actions = [
+      "dynamodb:DescribeTable",
+      "dynamodb:UpdateTable",
+    ]
+
+    resources = [
+      aws_dynamodb_table.default.arn,
+    ]
+
+    effect = "Allow"
+  }
+}
+
+resource "aws_iam_role_policy" "autoscaler" {
+  count  = var.enable_autoscaler == "true" ? 1 : 0
+  name   = "cp-dynamo-${random_id.id.hex}-autoscaler"
+  role   = join("", aws_iam_role.autoscaler.*.id)
+  policy = data.aws_iam_policy_document.autoscaler.json
+}
+
+data "aws_iam_policy_document" "autoscaler_cloudwatch" {
+  statement {
+    sid = ""
+
+    actions = [
+      "cloudwatch:PutMetricAlarm",
+      "cloudwatch:DescribeAlarms",
+      "cloudwatch:DeleteAlarms",
+    ]
+
+    resources = ["*"]
+
+    effect = "Allow"
+  }
+}
+
+resource "aws_iam_role_policy" "autoscaler_cloudwatch" {
+  count  = var.enable_autoscaler == "true" ? 1 : 0
+  name   = "cp-dynamo-${random_id.id.hex}-cloudwatch"
+  role   = join("", aws_iam_role.autoscaler.*.id)
+  policy = data.aws_iam_policy_document.autoscaler_cloudwatch.json
+}
+
+# https://github.com/cloudposse/terraform-aws-dynamodb-autoscaler
+
+module "dynamodb_autoscaler" {
+  source = "cloudposse/dynamodb-autoscaler/aws"
+
+  version                      = "0.13.0"
+  enabled                      = var.enable_autoscaler
+  name                         = "cp-dynamo-${random_id.id.hex}"
+  dynamodb_table_name          = aws_dynamodb_table.default.id
+  dynamodb_table_arn           = aws_dynamodb_table.default.arn
+  autoscale_write_target       = var.autoscale_write_target
+  autoscale_read_target        = var.autoscale_read_target
+  autoscale_min_read_capacity  = var.autoscale_min_read_capacity
+  autoscale_max_read_capacity  = var.autoscale_max_read_capacity
+  autoscale_min_write_capacity = var.autoscale_min_write_capacity
+  autoscale_max_write_capacity = var.autoscale_max_write_capacity
+}
