@@ -1,41 +1,61 @@
 variable "team_name" {
+  type        = string
+  description = "Team name"
 }
 
 variable "application" {
+  type        = string
+  description = "Application name"
 }
 
 variable "environment-name" {
+  type        = string
+  description = "Environment name"
 }
 
 variable "is-production" {
-  default = "false"
+  default     = "false"
+  type        = string
+  description = "Whether namespace is production or not"
 }
 
 variable "business-unit" {
   description = " Area of the MOJ responsible for the service"
   default     = "mojdigital"
+  type        = string
 }
 
 variable "namespace" {
+  type        = string
+  description = "Namespace name"
 }
 
 variable "infrastructure-support" {
   description = "The team responsible for managing the infrastructure. Should be of the form <team-name> (<team-email>)"
+  type        = string
 }
 
 variable "hash_key" {
+  type        = string
+  description = "Hash key name"
 }
 
 variable "hash_key_type" {
-  default = "S"
+  default     = "S"
+  type        = string
+  description = "Hash key type"
 }
 
 variable "range_key" {
-  default = ""
+  default     = ""
+  type        = string
+  description = "Range key name"
 }
 
 variable "range_key_type" {
-  default = "S"
+  default     = "S"
+  type        = string
+  description = "Hash key type"
 }
 
 variable "attributes" {
@@ -62,31 +82,37 @@ variable "ttl_attribute" {
 variable "autoscale_write_target" {
   default     = 50
   description = "The target value (in %) for DynamoDB write autoscaling"
+  type        = number
 }
 
 variable "autoscale_read_target" {
   default     = 50
   description = "The target value (in %) for DynamoDB read autoscaling"
+  type        = number
 }
 
 variable "autoscale_min_read_capacity" {
   default     = 1
   description = "DynamoDB autoscaling min read capacity"
+  type        = number
 }
 
 variable "autoscale_max_read_capacity" {
   default     = 10
   description = "DynamoDB autoscaling max read capacity"
+  type        = number
 }
 
 variable "autoscale_min_write_capacity" {
   default     = 1
   description = "DynamoDB autoscaling min write capacity"
+  type        = number
 }
 
 variable "autoscale_max_write_capacity" {
   default     = 10
   description = "DynamoDB autoscaling max write capacity"
+  type        = number
 }
 
 variable "enable_autoscaler" {
@@ -98,5 +124,6 @@ variable "enable_autoscaler" {
 variable "aws_region" {
   description = "Region into which the resource will be created"
   default     = "eu-west-2"
+  type        = string
 }
 
