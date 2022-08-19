@@ -3,13 +3,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-data "aws_caller_identity" "current" {
-}
-
-data "aws_region" "current" {
-}
-
-# attributes map here borrowed from https://github.com/cloudposse/terraform-aws-dynamodb
+# attributes map here borrowed from https://github.com/cloudposse/terraform-aws-dynamodb
 locals {
   attributes = concat(
     [
