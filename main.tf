@@ -101,6 +101,16 @@ data "aws_iam_policy_document" "policy" {
       aws_dynamodb_table.default.arn,
     ]
   }
+
+  statement {
+    actions = [
+      "dynamodb:ListTables",
+    ]
+
+    resources = [
+      "*",
+    ]
+  }
 }
 
 #######################
