@@ -31,7 +31,7 @@ module "example_team_dynamodb" {
 
 Sample usage is shown in the aptly named [example](example) folder.
 
-<!--- BEGIN_TF_DOCS --->
+<!-- BEGIN_TF_DOCS -->
 
 ## Inputs
 
