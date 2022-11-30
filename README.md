@@ -31,6 +31,8 @@ module "example_team_dynamodb" {
 
 Sample usage is shown in the aptly named [example](example) folder.
 
+<!--- BEGIN_TF_DOCS --->
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -73,3 +75,5 @@ Some of the inputs are tags. All infrastructure resources need to be tagged acco
 | secret_access_key | Secret for the new user |
 | table_arn | AWS DynamoDB ARN |
 | table_name | Table name |
+
+<!-- END_TF_DOCS -->
