@@ -160,7 +160,7 @@ data "aws_iam_policy_document" "autoscaler" {
 resource "aws_iam_role_policy" "autoscaler" {
   count  = var.enable_autoscaler == "true" ? 1 : 0
   name   = "cp-dynamo-${random_id.id.hex}-autoscaler"
-  role   = join("", aws_iam_role.autoscaler.*.id)
+  role   = join("", aws_iam_role.autoscaler[*].id)
   policy = data.aws_iam_policy_document.autoscaler.json
 }
 
@@ -183,7 +183,7 @@ data "aws_iam_policy_document" "autoscaler_cloudwatch" {
 resource "aws_iam_role_policy" "autoscaler_cloudwatch" {
   count  = var.enable_autoscaler == "true" ? 1 : 0
   name   = "cp-dynamo-${random_id.id.hex}-cloudwatch"
-  role   = join("", aws_iam_role.autoscaler.*.id)
+  role   = join("", aws_iam_role.autoscaler[*].id)
   policy = data.aws_iam_policy_document.autoscaler_cloudwatch.json
 }
 
