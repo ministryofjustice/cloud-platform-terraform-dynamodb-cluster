@@ -85,11 +85,12 @@ Sample usage is shown in the aptly named [example](example) folder.
 | <a name="input_autoscale_read_target"></a> [autoscale\_read\_target](#input\_autoscale\_read\_target) | The target value (in %) for DynamoDB read autoscaling | `number` | `50` | no |
 | <a name="input_autoscale_write_target"></a> [autoscale\_write\_target](#input\_autoscale\_write\_target) | The target value (in %) for DynamoDB write autoscaling | `number` | `50` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | Region into which the resource will be created | `string` | `"eu-west-2"` | no |
+| <a name="input_billing_mode"></a> [billing\_mode](#input\_billing\_mode) | Billing mode (PAY\_PER\_REQUEST or PROVISIONED) for the DynamoDB table | `string` | `"PROVISIONED"` | no |
 | <a name="input_business-unit"></a> [business-unit](#input\_business-unit) | Area of the MOJ responsible for the service | `string` | `"mojdigital"` | no |
 | <a name="input_enable_autoscaler"></a> [enable\_autoscaler](#input\_enable\_autoscaler) | Flag to enable/disable DynamoDB autoscaling | `string` | `"true"` | no |
 | <a name="input_enable_encryption"></a> [enable\_encryption](#input\_enable\_encryption) | Enable DynamoDB server-side encryption | `string` | `"true"` | no |
 | <a name="input_environment-name"></a> [environment-name](#input\_environment-name) | Environment name | `string` | n/a | yes |
-| <a name="input_global_secondary_indexes"></a> [global\_secondary\_indexes](#input\_global\_secondary\_indexes) | A list of maps of GSIs for the DynamoDB table | `list` | `[]` | no |
+| <a name="input_global_secondary_indexes"></a> [global\_secondary\_indexes](#input\_global\_secondary\_indexes) | A list of maps of GSIs for the DynamoDB table | `list(any)` | `[]` | no |
 | <a name="input_hash_key"></a> [hash\_key](#input\_hash\_key) | Hash key name | `string` | n/a | yes |
 | <a name="input_hash_key_type"></a> [hash\_key\_type](#input\_hash\_key\_type) | Hash key type | `string` | `"S"` | no |
 | <a name="input_infrastructure-support"></a> [infrastructure-support](#input\_infrastructure-support) | The team responsible for managing the infrastructure. Should be of the form <team-name> (<team-email>) | `string` | n/a | yes |

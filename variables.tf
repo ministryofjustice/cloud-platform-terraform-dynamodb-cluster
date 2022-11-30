@@ -130,5 +130,11 @@ variable "aws_region" {
 variable "global_secondary_indexes" {
   description = "A list of maps of GSIs for the DynamoDB table"
   default     = []
-  type        = list
+  type        = list(any)
+}
+
+variable "billing_mode" {
+  description = "Billing mode (PAY_PER_REQUEST or PROVISIONED) for the DynamoDB table"
+  default     = "PROVISIONED"
+  type        = string
 }

@@ -36,6 +36,7 @@ resource "aws_dynamodb_table" "default" {
   write_capacity = var.autoscale_min_write_capacity
   hash_key       = var.hash_key
   range_key      = var.range_key
+  billing_mode   = var.billing_mode
 
   dynamic "attribute" {
     for_each = local.attributes_final
