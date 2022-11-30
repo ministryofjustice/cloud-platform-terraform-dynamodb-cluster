@@ -32,45 +32,80 @@ module "example_team_dynamodb" {
 
 Sample usage is shown in the aptly named [example](example) folder.
 
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0.0 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.0.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0.0 |
+| <a name="provider_aws.custom"></a> [aws.custom](#provider\_aws.custom) | >= 3.0.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | >= 2.0.0 |
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_dynamodb_autoscaler"></a> [dynamodb\_autoscaler](#module\_dynamodb\_autoscaler) | cloudposse/dynamodb-autoscaler/aws | 0.13.0 |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_dynamodb_table.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table) | resource |
+| [aws_iam_access_key.key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
+| [aws_iam_role.autoscaler](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy.autoscaler](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_iam_role_policy.autoscaler_cloudwatch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_iam_user.user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
+| [aws_iam_user_policy.userpol](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy) | resource |
+| [random_id.id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [aws_iam_policy_document.assume_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.autoscaler](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.autoscaler_cloudwatch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| hash_key |  unique identifier | string | - | yes |
-| hash_key_type |  unique identifier | string | "S" | no |
-| range_key | aka sort attribute | string | - | yes |
-| range_key_type | aka sort attribute | string | "S" | no |
-| enable_encryption | on/off | bool | true | no |
-| ttl_attribute | field name in DB | string | "Expires" | no |
-| autoscale_write_target | 50% throttled reqs | n | 50 | no |
-| autoscale_read_target | 50% throttled reqs | n | 50 | no |
-| autoscale_min_read_capacity | AWS-specific "units" | n | 1 | no |
-| autoscale_min_write_capacity | AWS-specific "units" | n | 1 | no |
-| autoscale_max_read_capacity | AWS-specific "units" | n | 10 | no |
-| autoscale_max_write_capacity | AWS-specific "units" | n | 10 | no |
-| enable_autoscaler | on/off | bool | true | no |
-| aws_region | region | string | eu-west-2 | no |
-| attributes | attribute definitions  | list(objects) | - | no |
-
-
-### Tags
-
-Some of the inputs are tags. All infrastructure resources need to be tagged according to the [MOJ technical guidance](https://ministryofjustice.github.io/technical-guidance/documentation/standards/documenting-infrastructure-owners.html#documenting-owners-of-infrastructure). The tags are stored as variables that you will need to fill out as part of your module.
-
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| team_name |  | string | - | yes |
-| application |  | string | - | yes |
-| business-unit | Area of the MOJ responsible for the service | string | `mojdigital` | yes |
-| environment-name |  | string | - | yes |
-| infrastructure-support | The team responsible for managing the infrastructure. Should be of the form team-email | string | - | yes |
-| is-production |  | string | `false` | yes |
+|------|-------------|------|---------|:--------:|
+| <a name="input_application"></a> [application](#input\_application) | Application name | `string` | n/a | yes |
+| <a name="input_attributes"></a> [attributes](#input\_attributes) | Additional DynamoDB attributes in the form of a list of mapped values | <pre>list(object({<br>    name = string<br>    type = string<br>  }))</pre> | `[]` | no |
+| <a name="input_autoscale_max_read_capacity"></a> [autoscale\_max\_read\_capacity](#input\_autoscale\_max\_read\_capacity) | DynamoDB autoscaling max read capacity | `number` | `10` | no |
+| <a name="input_autoscale_max_write_capacity"></a> [autoscale\_max\_write\_capacity](#input\_autoscale\_max\_write\_capacity) | DynamoDB autoscaling max write capacity | `number` | `10` | no |
+| <a name="input_autoscale_min_read_capacity"></a> [autoscale\_min\_read\_capacity](#input\_autoscale\_min\_read\_capacity) | DynamoDB autoscaling min read capacity | `number` | `1` | no |
+| <a name="input_autoscale_min_write_capacity"></a> [autoscale\_min\_write\_capacity](#input\_autoscale\_min\_write\_capacity) | DynamoDB autoscaling min write capacity | `number` | `1` | no |
+| <a name="input_autoscale_read_target"></a> [autoscale\_read\_target](#input\_autoscale\_read\_target) | The target value (in %) for DynamoDB read autoscaling | `number` | `50` | no |
+| <a name="input_autoscale_write_target"></a> [autoscale\_write\_target](#input\_autoscale\_write\_target) | The target value (in %) for DynamoDB write autoscaling | `number` | `50` | no |
+| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | Region into which the resource will be created | `string` | `"eu-west-2"` | no |
+| <a name="input_business-unit"></a> [business-unit](#input\_business-unit) | Area of the MOJ responsible for the service | `string` | `"mojdigital"` | no |
+| <a name="input_enable_autoscaler"></a> [enable\_autoscaler](#input\_enable\_autoscaler) | Flag to enable/disable DynamoDB autoscaling | `string` | `"true"` | no |
+| <a name="input_enable_encryption"></a> [enable\_encryption](#input\_enable\_encryption) | Enable DynamoDB server-side encryption | `string` | `"true"` | no |
+| <a name="input_environment-name"></a> [environment-name](#input\_environment-name) | Environment name | `string` | n/a | yes |
+| <a name="input_global_secondary_indexes"></a> [global\_secondary\_indexes](#input\_global\_secondary\_indexes) | A list of maps of GSIs for the DynamoDB table | `list` | `[]` | no |
+| <a name="input_hash_key"></a> [hash\_key](#input\_hash\_key) | Hash key name | `string` | n/a | yes |
+| <a name="input_hash_key_type"></a> [hash\_key\_type](#input\_hash\_key\_type) | Hash key type | `string` | `"S"` | no |
+| <a name="input_infrastructure-support"></a> [infrastructure-support](#input\_infrastructure-support) | The team responsible for managing the infrastructure. Should be of the form <team-name> (<team-email>) | `string` | n/a | yes |
+| <a name="input_is-production"></a> [is-production](#input\_is-production) | Whether namespace is production or not | `string` | `"false"` | no |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace name | `string` | n/a | yes |
+| <a name="input_range_key"></a> [range\_key](#input\_range\_key) | Range key name | `string` | `""` | no |
+| <a name="input_range_key_type"></a> [range\_key\_type](#input\_range\_key\_type) | Hash key type | `string` | `"S"` | no |
+| <a name="input_team_name"></a> [team\_name](#input\_team\_name) | Team name | `string` | n/a | yes |
+| <a name="input_ttl_attribute"></a> [ttl\_attribute](#input\_ttl\_attribute) | DynamoDB table TTL attribute | `string` | `"Expires"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| access_key_id | Access key id for the new user |
-| secret_access_key | Secret for the new user |
-| table_arn | AWS DynamoDB ARN |
-| table_name | Table name |
+| <a name="output_access_key_id"></a> [access\_key\_id](#output\_access\_key\_id) | Access key id for db |
+| <a name="output_secret_access_key"></a> [secret\_access\_key](#output\_secret\_access\_key) | Secret key for db |
+| <a name="output_table_arn"></a> [table\_arn](#output\_table\_arn) | DynamoDB table ARN |
+| <a name="output_table_name"></a> [table\_name](#output\_table\_name) | DynamoDB table name |
+<!-- END_TF_DOCS -->
