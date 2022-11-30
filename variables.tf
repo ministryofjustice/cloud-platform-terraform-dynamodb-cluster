@@ -127,3 +127,8 @@ variable "aws_region" {
   type        = string
 }
 
+variable "global_secondary_indexes" {
+  description = "A list of maps of GSIs for the DynamoDB table"
+  default     = []
+  type        = list
+}
