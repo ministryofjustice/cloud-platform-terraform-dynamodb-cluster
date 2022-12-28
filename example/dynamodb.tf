@@ -5,13 +5,13 @@
  *
  */
 module "example_team_dynamodb" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=3.2.4"
+  source = "../"
 
   team_name              = var.team_name
   business-unit          = var.business_unit
   application            = var.application
   is-production          = var.is_production
-  environment-name       = var.environment
+  environment-name       = var.environment_name
   infrastructure-support = var.infrastructure_support
   aws_region             = "eu-west-2"
   namespace              = var.namespace
