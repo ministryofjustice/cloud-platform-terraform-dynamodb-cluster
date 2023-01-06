@@ -10,11 +10,11 @@ output "table_arn" {
 
 output "access_key_id" {
   description = "Access key id for db"
-  value       = aws_iam_access_key.key.id
+  value       = aws_iam_access_key.key_2023.id
 }
 
 output "secret_access_key" {
   description = "Secret key for db"
-  value       = aws_iam_access_key.key.secret
+  value       = aws_iam_access_key.key_2023.secret
 }
 

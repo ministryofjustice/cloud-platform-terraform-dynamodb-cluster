@@ -95,7 +95,7 @@ resource "aws_iam_user" "user" {
   path = "/system/dynamo-user/"
 }
 
-resource "aws_iam_access_key" "key" {
+resource "aws_iam_access_key" "key_2023" {
   user = aws_iam_user.user.name
 }
 
