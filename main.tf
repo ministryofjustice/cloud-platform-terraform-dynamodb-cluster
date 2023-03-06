@@ -1,3 +1,18 @@
+locals {
+  default_tags = {
+    # Mandatory
+    business-unit = var.business-unit
+    application   = var.application
+    is-production = var.is-production
+    owner         = var.team_name
+    namespace     = var.namespace # for billing and identification purposes
+
+    # Optional
+    environment-name       = var.environment-name
+    infrastructure-support = var.infrastructure-support
+  }
+}
+
 provider "aws" {
   alias  = "custom"
   region = var.aws_region
@@ -79,20 +94,14 @@ resource "aws_dynamodb_table" "default" {
     enabled = "true"
   }
 
-  tags = {
-    business-unit          = var.business-unit
-    application            = var.application
-    is-production          = var.is-production
-    environment-name       = var.environment-name
-    owner                  = var.team_name
-    infrastructure-support = var.infrastructure-support
-    namespace              = var.namespace
-  }
+  tags = local.default_tags
 }
 
 resource "aws_iam_user" "user" {
   name = "cp-dynamo-${random_id.id.hex}"
   path = "/system/dynamo-user/"
+
+  tags = local.default_tags
 }
 
 resource "aws_iam_access_key" "key" {
@@ -153,6 +162,8 @@ resource "aws_iam_role" "autoscaler" {
   count              = var.enable_autoscaler == "true" ? 1 : 0
   name               = "cp-dynamo-${random_id.id.hex}-autoscaler"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
+
+  tags = local.default_tags
 }
 
 data "aws_iam_policy_document" "autoscaler" {
@@ -207,7 +218,7 @@ resource "aws_iam_role_policy" "autoscaler_cloudwatch" {
 module "dynamodb_autoscaler" {
   source = "cloudposse/dynamodb-autoscaler/aws"
 
-  version                      = "0.13.0"
+  version                      = "0.14.0"
   enabled                      = var.enable_autoscaler
   name                         = "cp-dynamo-${random_id.id.hex}"
   dynamodb_table_name          = aws_dynamodb_table.default.id
@@ -218,4 +229,6 @@ module "dynamodb_autoscaler" {
   autoscale_max_read_capacity  = var.autoscale_max_read_capacity
   autoscale_min_write_capacity = var.autoscale_min_write_capacity
   autoscale_max_write_capacity = var.autoscale_max_write_capacity
+
+  tags = local.default_tags
 }
