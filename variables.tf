@@ -14,14 +14,12 @@ variable "environment-name" {
 }
 
 variable "is-production" {
-  default     = "false"
   type        = string
   description = "Whether namespace is production or not"
 }
 
 variable "business-unit" {
-  description = " Area of the MOJ responsible for the service"
-  default     = "mojdigital"
+  description = "Area of the MOJ responsible for the service"
   type        = string
 }
 

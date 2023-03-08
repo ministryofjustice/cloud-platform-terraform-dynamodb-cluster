@@ -53,7 +53,7 @@ Sample usage is shown in the aptly named [example](example) folder.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_dynamodb_autoscaler"></a> [dynamodb\_autoscaler](#module\_dynamodb\_autoscaler) | cloudposse/dynamodb-autoscaler/aws | 0.13.0 |
+| <a name="module_dynamodb_autoscaler"></a> [dynamodb\_autoscaler](#module\_dynamodb\_autoscaler) | cloudposse/dynamodb-autoscaler/aws | 0.14.0 |
 
 ## Resources
 
@@ -86,7 +86,7 @@ Sample usage is shown in the aptly named [example](example) folder.
 | <a name="input_autoscale_write_target"></a> [autoscale\_write\_target](#input\_autoscale\_write\_target) | The target value (in %) for DynamoDB write autoscaling | `number` | `50` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | Region into which the resource will be created | `string` | `"eu-west-2"` | no |
 | <a name="input_billing_mode"></a> [billing\_mode](#input\_billing\_mode) | Billing mode (PAY\_PER\_REQUEST or PROVISIONED) for the DynamoDB table | `string` | `"PROVISIONED"` | no |
-| <a name="input_business-unit"></a> [business-unit](#input\_business-unit) | Area of the MOJ responsible for the service | `string` | `"mojdigital"` | no |
+| <a name="input_business-unit"></a> [business-unit](#input\_business-unit) | Area of the MOJ responsible for the service | `string` | n/a | yes |
 | <a name="input_enable_autoscaler"></a> [enable\_autoscaler](#input\_enable\_autoscaler) | Flag to enable/disable DynamoDB autoscaling | `string` | `"true"` | no |
 | <a name="input_enable_encryption"></a> [enable\_encryption](#input\_enable\_encryption) | Enable DynamoDB server-side encryption | `string` | `"true"` | no |
 | <a name="input_environment-name"></a> [environment-name](#input\_environment-name) | Environment name | `string` | n/a | yes |
@@ -94,7 +94,7 @@ Sample usage is shown in the aptly named [example](example) folder.
 | <a name="input_hash_key"></a> [hash\_key](#input\_hash\_key) | Hash key name | `string` | n/a | yes |
 | <a name="input_hash_key_type"></a> [hash\_key\_type](#input\_hash\_key\_type) | Hash key type | `string` | `"S"` | no |
 | <a name="input_infrastructure-support"></a> [infrastructure-support](#input\_infrastructure-support) | The team responsible for managing the infrastructure. Should be of the form <team-name> (<team-email>) | `string` | n/a | yes |
-| <a name="input_is-production"></a> [is-production](#input\_is-production) | Whether namespace is production or not | `string` | `"false"` | no |
+| <a name="input_is-production"></a> [is-production](#input\_is-production) | Whether namespace is production or not | `string` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace name | `string` | n/a | yes |
 | <a name="input_range_key"></a> [range\_key](#input\_range\_key) | Range key name | `string` | `""` | no |
 | <a name="input_range_key_type"></a> [range\_key\_type](#input\_range\_key\_type) | Hash key type | `string` | `"S"` | no |
