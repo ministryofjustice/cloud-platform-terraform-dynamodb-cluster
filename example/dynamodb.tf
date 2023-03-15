@@ -13,7 +13,6 @@ module "example_team_dynamodb" {
   is-production          = var.is_production
   environment-name       = var.environment_name
   infrastructure-support = var.infrastructure_support
-  aws_region             = "eu-west-2"
   namespace              = var.namespace
 
   hash_key  = "example-hash"

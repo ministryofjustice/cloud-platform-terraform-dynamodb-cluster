@@ -119,12 +119,6 @@ variable "enable_autoscaler" {
   description = "Flag to enable/disable DynamoDB autoscaling"
 }
 
-variable "aws_region" {
-  description = "Region into which the resource will be created"
-  default     = "eu-west-2"
-  type        = string
-}
-
 variable "global_secondary_indexes" {
   description = "A list of maps of GSIs for the DynamoDB table"
   default     = []

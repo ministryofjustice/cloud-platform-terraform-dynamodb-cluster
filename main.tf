@@ -13,11 +13,6 @@ locals {
   }
 }
 
-provider "aws" {
-  alias  = "custom"
-  region = var.aws_region
-}
-
 # attributes map here borrowed from https://github.com/cloudposse/terraform-aws-dynamodb
 locals {
   attributes = concat(
@@ -45,7 +40,6 @@ resource "random_id" "id" {
 }
 
 resource "aws_dynamodb_table" "default" {
-  provider       = aws.custom
   name           = "cp-${random_id.id.hex}"
   read_capacity  = var.autoscale_min_read_capacity
   write_capacity = var.autoscale_min_write_capacity
