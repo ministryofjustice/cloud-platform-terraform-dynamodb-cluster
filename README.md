@@ -46,7 +46,6 @@ Sample usage is shown in the aptly named [example](example) folder.
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.27.0 |
-| <a name="provider_aws.custom"></a> [aws.custom](#provider\_aws.custom) | >= 4.27.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | >= 2.0.0 |
 
 ## Modules
@@ -84,7 +83,6 @@ Sample usage is shown in the aptly named [example](example) folder.
 | <a name="input_autoscale_min_write_capacity"></a> [autoscale\_min\_write\_capacity](#input\_autoscale\_min\_write\_capacity) | DynamoDB autoscaling min write capacity | `number` | `1` | no |
 | <a name="input_autoscale_read_target"></a> [autoscale\_read\_target](#input\_autoscale\_read\_target) | The target value (in %) for DynamoDB read autoscaling | `number` | `50` | no |
 | <a name="input_autoscale_write_target"></a> [autoscale\_write\_target](#input\_autoscale\_write\_target) | The target value (in %) for DynamoDB write autoscaling | `number` | `50` | no |
-| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | Region into which the resource will be created | `string` | `"eu-west-2"` | no |
 | <a name="input_billing_mode"></a> [billing\_mode](#input\_billing\_mode) | Billing mode (PAY\_PER\_REQUEST or PROVISIONED) for the DynamoDB table | `string` | `"PROVISIONED"` | no |
 | <a name="input_business-unit"></a> [business-unit](#input\_business-unit) | Area of the MOJ responsible for the service | `string` | n/a | yes |
 | <a name="input_enable_autoscaler"></a> [enable\_autoscaler](#input\_enable\_autoscaler) | Flag to enable/disable DynamoDB autoscaling | `string` | `"true"` | no |
