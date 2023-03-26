@@ -16,5 +16,6 @@ output "access_key_id" {
 output "secret_access_key" {
   description = "Secret key for db"
   value       = aws_iam_access_key.key.secret
+  sensitive   = true
 }
 
