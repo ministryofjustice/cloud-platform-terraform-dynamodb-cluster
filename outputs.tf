@@ -19,3 +19,6 @@ output "secret_access_key" {
   sensitive   = true
 }
 
+output "irsa_policy_arn" {
+  value = aws_iam_policy.irsa.arn
+}

@@ -91,6 +91,7 @@ resource "aws_dynamodb_table" "default" {
   tags = local.default_tags
 }
 
+# Legacy long-lived credentials
 resource "aws_iam_user" "user" {
   name = "cp-dynamo-${random_id.id.hex}"
   path = "/system/dynamo-user/"
@@ -129,6 +130,36 @@ data "aws_iam_policy_document" "policy" {
       "*",
     ]
   }
+}
+
+# Short-lived credentials (IRSA)
+data "aws_iam_policy_document" "irsa" {
+  version = "2012-10-17"
+  statement {
+    sid       = "AllowListTables" # see https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster/pull/20
+    effect    = "Allow"
+    actions   = ["dynamodb:ListTables"]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "AllowTableIndexActions"
+    effect = "Allow"
+    actions = [
+      "dynamodb:*"
+    ]
+    resources = [
+      aws_dynamodb_table.default.arn,
+      "${aws_dynamodb_table.default.arn}/index/*"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "irsa" {
+  name   = "cloud-platform-dynamodb-${random_id.id.hex}"
+  path   = "/cloud-platform/dynamodb/"
+  policy = data.aws_iam_policy_document.irsa.json
+  tags   = local.default_tags
 }
 
 #######################
