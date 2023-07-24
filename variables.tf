@@ -1,38 +1,6 @@
-variable "team_name" {
-  type        = string
-  description = "Team name"
-}
-
-variable "application" {
-  type        = string
-  description = "Application name"
-}
-
-variable "environment-name" {
-  type        = string
-  description = "Environment name"
-}
-
-variable "is-production" {
-  type        = string
-  description = "Whether namespace is production or not"
-}
-
-variable "business-unit" {
-  description = "Area of the MOJ responsible for the service"
-  type        = string
-}
-
-variable "namespace" {
-  type        = string
-  description = "Namespace name"
-}
-
-variable "infrastructure-support" {
-  description = "The team responsible for managing the infrastructure. Should be of the form <team-name> (<team-email>)"
-  type        = string
-}
-
+#################
+# Configuration #
+#################
 variable "hash_key" {
   type        = string
   description = "Hash key name"
@@ -128,5 +96,43 @@ variable "global_secondary_indexes" {
 variable "billing_mode" {
   description = "Billing mode (PAY_PER_REQUEST or PROVISIONED) for the DynamoDB table"
   default     = "PROVISIONED"
+  type        = string
+}
+
+########
+# Tags #
+########
+variable "business_unit" {
+  description = "Area of the MOJ responsible for the service"
+  type        = string
+}
+
+variable "application" {
+  description = "Application name"
+  type        = string
+}
+
+variable "is_production" {
+  description = "Whether this is used for production or not"
+  type        = string
+}
+
+variable "team_name" {
+  description = "Team name"
+  type        = string
+}
+
+variable "namespace" {
+  description = "Namespace name"
+  type        = string
+}
+
+variable "environment_name" {
+  description = "Environment name"
+  type        = string
+}
+
+variable "infrastructure_support" {
+  description = "The team responsible for managing the infrastructure. Should be of the form <team-name> (<team-email>)"
   type        = string
 }

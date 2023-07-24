@@ -1,15 +1,15 @@
 locals {
   default_tags = {
     # Mandatory
-    business-unit = var.business-unit
+    business-unit = var.business_unit
     application   = var.application
-    is-production = var.is-production
+    is-production = var.is_production
     owner         = var.team_name
     namespace     = var.namespace # for billing and identification purposes
 
     # Optional
-    environment-name       = var.environment-name
-    infrastructure-support = var.infrastructure-support
+    environment-name       = var.environment_name
+    infrastructure-support = var.infrastructure_support
   }
 }
 
@@ -91,59 +91,18 @@ resource "aws_dynamodb_table" "default" {
   tags = local.default_tags
 }
 
-# Legacy long-lived credentials
-resource "aws_iam_user" "user" {
-  name = "cp-dynamo-${random_id.id.hex}"
-  path = "/system/dynamo-user/"
-
-  tags = local.default_tags
-}
-
-resource "aws_iam_access_key" "key" {
-  user = aws_iam_user.user.name
-}
-
-resource "aws_iam_user_policy" "userpol" {
-  name   = aws_iam_user.user.name
-  policy = data.aws_iam_policy_document.policy.json
-  user   = aws_iam_user.user.name
-}
-
-data "aws_iam_policy_document" "policy" {
-  statement {
-    actions = [
-      "dynamodb:*",
-    ]
-
-    resources = [
-      aws_dynamodb_table.default.arn,
-      "${aws_dynamodb_table.default.arn}/index/*",
-    ]
-  }
-
-  statement {
-    actions = [
-      "dynamodb:ListTables",
-    ]
-
-    resources = [
-      "*",
-    ]
-  }
-}
-
 # Short-lived credentials (IRSA)
 data "aws_iam_policy_document" "irsa" {
   version = "2012-10-17"
   statement {
-    sid       = "AllowListTables" # see https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster/pull/20
+    sid       = "AllowListTablesFor${random_id.id.hex}" # see https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster/pull/20
     effect    = "Allow"
     actions   = ["dynamodb:ListTables"]
     resources = ["*"]
   }
 
   statement {
-    sid    = "AllowTableIndexActions"
+    sid    = "AllowTableIndexActionsFor${random_id.id.hex}"
     effect = "Allow"
     actions = [
       "dynamodb:*"

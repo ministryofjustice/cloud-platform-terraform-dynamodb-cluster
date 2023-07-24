@@ -8,17 +8,7 @@ output "table_arn" {
   description = "DynamoDB table ARN"
 }
 
-output "access_key_id" {
-  description = "Access key id for db"
-  value       = aws_iam_access_key.key.id
-}
-
-output "secret_access_key" {
-  description = "Secret key for db"
-  value       = aws_iam_access_key.key.secret
-  sensitive   = true
-}
-
 output "irsa_policy_arn" {
-  value = aws_iam_policy.irsa.arn
+  description = "IAM policy ARN for access to the DynamoDB table"
+  value       = aws_iam_policy.irsa.arn
 }
