@@ -1,36 +1,31 @@
 # cloud-platform-terraform-dynamodb-cluster
 
-[![Releases](https://img.shields.io/github/release/ministryofjustice/cloud-platform-terraform-dynamodb-cluster/all.svg?style=flat-square)](https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster/releases)
+[![Releases](https://img.shields.io/github/v/release/ministryofjustice/cloud-platform-terraform-dynamodb-cluster.svg)](https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster/releases)
 
-DynamoDB instance and credentials for the Cloud Platform.
-This module will create a "simple" (as opposed to a "global") table, with some safe defaults:
- - a dedicated IAM user and API key allowing only access to this resource
- - point-in-time recovery (35 days of automatic incremental backups)
- - server-side encryption
- - time-to-live enabled
- - automatic autoscaling for both read&write units (default 1-10)
+This Terraform module will create an [Amazon DynamoDB](https://aws.amazon.com/dynamodb/) table for use on the Cloud Platform.
 
 ## Usage
 
 ```hcl
-module "example_team_dynamodb" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=version"
+module "dynamodb" {
+  source = "github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=version" # use the latest release
 
-  team_name              = var.team_name
-  business-unit          = var.business_unit
+  # Configuration
+  hash_key  = "pk"
+  range_key = "sk"
+
+  # Tags
+  business_unit          = var.business_unit
   application            = var.application
-  is-production          = var.is_production
-  environment-name       = var.environment
-  infrastructure-support = var.infrastructure_support
-  aws_region             = "eu-west-2"
+  is_production          = var.is_production
+  team_name              = var.team_name
   namespace              = var.namespace
-
-  hash_key  = "example-hash"
-  range_key = "example-range"
+  environment_name       = var.environment
+  infrastructure_support = var.infrastructure_support
 }
 ```
 
-Sample usage is shown in the aptly named [example](example) folder.
+See the [examples/](examples/) folder for more information.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -111,3 +106,14 @@ Sample usage is shown in the aptly named [example](example) folder.
 | <a name="output_table_arn"></a> [table\_arn](#output\_table\_arn) | DynamoDB table ARN |
 | <a name="output_table_name"></a> [table\_name](#output\_table\_name) | DynamoDB table name |
 <!-- END_TF_DOCS -->
+
+## Tags
+
+Some of the inputs for this module are tags. All infrastructure resources must be tagged to meet the MOJ Technical Guidance on [Documenting owners of infrastructure](https://technical-guidance.service.justice.gov.uk/documentation/standards/documenting-infrastructure-owners.html).
+
+You should use your namespace variables to populate these. See the [Usage](#usage) section for more information.
+
+## Reading Material
+
+- [Cloud Platform user guide](https://user-guide.cloud-platform.service.justice.gov.uk/#cloud-platform-user-guide)
+- [Amazon DynamoDB developer guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
