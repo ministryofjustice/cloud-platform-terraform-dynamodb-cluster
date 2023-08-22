@@ -22,3 +22,7 @@ output "secret_access_key" {
 output "irsa_policy_arn" {
   value = aws_iam_policy.irsa.arn
 }
+
+output "irsa_policy_json" {
+  value = aws_iam_policy.irsa.policy
+}
