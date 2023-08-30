@@ -136,14 +136,14 @@ data "aws_iam_policy_document" "policy" {
 data "aws_iam_policy_document" "irsa" {
   version = "2012-10-17"
   statement {
-    sid       = "AllowListTables" # see https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster/pull/20
+    sid       = "AllowListTablesFor${random_id.id.hex}" # see https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster/pull/20
     effect    = "Allow"
     actions   = ["dynamodb:ListTables"]
     resources = ["*"]
   }
 
   statement {
-    sid    = "AllowTableIndexActions"
+    sid    = "AllowTableIndexActionsFor${random_id.id.hex}"
     effect = "Allow"
     actions = [
       "dynamodb:*"

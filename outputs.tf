@@ -20,5 +20,6 @@ output "secret_access_key" {
 }
 
 output "irsa_policy_arn" {
-  value = aws_iam_policy.irsa.arn
+  description = "IAM policy ARN for access to the DynamoDB table"
+  value       = aws_iam_policy.irsa.arn
 }
