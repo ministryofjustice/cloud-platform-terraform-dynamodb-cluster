@@ -101,7 +101,7 @@ See the [examples/](examples/) folder for more information.
 | Name | Description |
 |------|-------------|
 | <a name="output_access_key_id"></a> [access\_key\_id](#output\_access\_key\_id) | Access key id for db |
-| <a name="output_irsa_policy_arn"></a> [irsa\_policy\_arn](#output\_irsa\_policy\_arn) | n/a |
+| <a name="output_irsa_policy_arn"></a> [irsa\_policy\_arn](#output\_irsa\_policy\_arn) | IAM policy ARN for access to the DynamoDB table |
 | <a name="output_secret_access_key"></a> [secret\_access\_key](#output\_secret\_access\_key) | Secret key for db |
 | <a name="output_table_arn"></a> [table\_arn](#output\_table\_arn) | DynamoDB table ARN |
 | <a name="output_table_name"></a> [table\_name](#output\_table\_name) | DynamoDB table name |
