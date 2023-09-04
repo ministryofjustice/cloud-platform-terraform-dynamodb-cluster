@@ -91,47 +91,6 @@ resource "aws_dynamodb_table" "default" {
   tags = local.default_tags
 }
 
-# Legacy long-lived credentials
-resource "aws_iam_user" "user" {
-  name = "cp-dynamo-${random_id.id.hex}"
-  path = "/system/dynamo-user/"
-
-  tags = local.default_tags
-}
-
-resource "aws_iam_access_key" "key" {
-  user = aws_iam_user.user.name
-}
-
-resource "aws_iam_user_policy" "userpol" {
-  name   = aws_iam_user.user.name
-  policy = data.aws_iam_policy_document.policy.json
-  user   = aws_iam_user.user.name
-}
-
-data "aws_iam_policy_document" "policy" {
-  statement {
-    actions = [
-      "dynamodb:*",
-    ]
-
-    resources = [
-      aws_dynamodb_table.default.arn,
-      "${aws_dynamodb_table.default.arn}/index/*",
-    ]
-  }
-
-  statement {
-    actions = [
-      "dynamodb:ListTables",
-    ]
-
-    resources = [
-      "*",
-    ]
-  }
-}
-
 # Short-lived credentials (IRSA)
 data "aws_iam_policy_document" "irsa" {
   version = "2012-10-17"
