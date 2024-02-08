@@ -1,6 +1,6 @@
 module "example_team_dynamodb" {
   source = "../" # use the latest release
-  #source = "https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=version" # use the latest release
+  # source = "https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=version" # use the latest release
 
   team_name              = var.team_name
   business_unit          = var.business_unit
