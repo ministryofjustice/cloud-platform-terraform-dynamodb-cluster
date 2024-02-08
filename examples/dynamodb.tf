@@ -1,11 +1,6 @@
-/*
- * Make sure that you use the latest version of the module by changing the
- * `ref=` value in the `source` attribute to the latest version listed on the
- * releases page of this repository.
- *
- */
 module "example_team_dynamodb" {
-  source = "../"
+  source = "../" # use the latest release
+  #source = "https://github.com/ministryofjustice/cloud-platform-terraform-dynamodb-cluster?ref=version" # use the latest release
 
   team_name              = var.team_name
   business_unit          = var.business_unit
